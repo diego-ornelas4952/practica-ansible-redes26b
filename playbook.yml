@@ -1,0 +1,65 @@
+---
+- name: 1. Práctica introductoria de Ansible en localhost (Mac)
+  hosts: local
+  gather_facts: false
+
+  tasks:
+    - name: Crear el directorio de prueba /tmp/prueba_ansible
+      ansible.builtin.file:
+        path: /tmp/prueba_ansible
+        state: directory
+        mode: '0755'
+
+    - name: Crear el archivo saludo.txt con un mensaje de prueba
+      ansible.builtin.copy:
+        dest: /tmp/prueba_ansible/saludo.txt
+        content: "¡Hola desde Ansible en macOS (Apple Silicon)!\n"
+        mode: '0644'
+
+- name: 2. Desplegar y configurar servidor web Nginx en Ubuntu Server
+  hosts: servidores_web
+  become: true
+
+  tasks:
+    - name: Instalar servidor web Nginx (si no está instalado)
+      ansible.builtin.shell:
+        cmd: DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y nginx
+        creates: /usr/sbin/nginx
+
+    - name: Desplegar página web personalizada con datos del servidor
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        mode: '0644'
+        content: |
+          <!DOCTYPE html>
+          <html lang="es">
+          <head>
+            <meta charset="UTF-8">
+            <title>Práctica de Ansible</title>
+            <style>
+              body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+              .card { background: #1e293b; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); max-width: 520px; border: 1px solid #334155; }
+              h1 { color: #38bdf8; margin-top: 0; }
+              ul { line-height: 1.8; color: #cbd5e1; }
+              code { background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #4ade80; }
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <h1>¡Servidor configurado con Ansible!</h1>
+              <p>Este servidor web <strong>Nginx</strong> fue instalado y configurado automáticamente desde macOS.</p>
+              <ul>
+                <li><strong>Hostname:</strong> <code>{{ ansible_facts['hostname'] }}</code></li>
+                <li><strong>Sistema Operativo:</strong> <code>{{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}</code></li>
+                <li><strong>Dirección IP:</strong> <code>{{ ansible_facts['default_ipv4']['address'] }}</code></li>
+                <li><strong>Arquitectura:</strong> <code>{{ ansible_facts['architecture'] }}</code></li>
+              </ul>
+            </div>
+          </body>
+          </html>
+
+    - name: Asegurar que el servicio Nginx esté activo y habilitado al inicio
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
