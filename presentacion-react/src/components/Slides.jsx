@@ -4,9 +4,6 @@ import {
   Play,
   RotateCcw,
   Sparkles,
-  CheckCircle2,
-  XCircle,
-  ArrowRight,
   Thermometer,
 } from 'lucide-react'
 import SpotlightCard from './SpotlightCard'
@@ -165,8 +162,8 @@ function ServerRackIllustration() {
 export function SlideHero() {
   const badges = [
     { label: 'Control: Macintosh', color: '#2997ff' },
-    { label: 'Servidor: Ubuntu VM', color: '#30d158' },
-    { label: 'Conexión: SSH automático', color: '#bf5af2' },
+    { label: 'Servidor: AWS EC2 (Ubuntu 26.04)', color: '#30d158' },
+    { label: 'Conexión: SSH (.pem)', color: '#bf5af2' },
   ]
 
   return (
@@ -533,8 +530,8 @@ export function SlideHowItWorks() {
             Servidor Remoto (Objetivo)
           </span>
           <div className="my-3"><ServerRackIllustration /></div>
-          <h3 className="text-xl font-semibold">Ubuntu Server VM</h3>
-          <p className="mt-1 text-xs text-[#a1a1a6]">IP: <code className="text-white">192.168.1.222</code> · Recibe y ejecuta todo.</p>
+          <h3 className="text-xl font-semibold">Ubuntu Server (AWS)</h3>
+          <p className="mt-1 text-xs text-[#a1a1a6]">IP: <code className="text-white">18.191.92.45</code> · Recibe y ejecuta todo.</p>
         </SpotlightCard>
       </div>
 
@@ -575,7 +572,7 @@ export function SlidePillars() {
       tag: 'hosts.ini',
       color: '#2997ff',
       summary: 'Es la agenda de contactos. Aquí anotamos la IP y el usuario de nuestra VM.',
-      detail: 'En nuestro proyecto tiene dos grupos: la Mac ([local]) y la VM Ubuntu ([servidores_web]).',
+      detail: 'En nuestro proyecto tiene dos grupos: la Mac ([local]) y la VM en AWS ([servidores_web]).',
       svg: (
         <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
           <rect x="10" y="8" width="36" height="40" rx="8" fill="rgba(41,151,255,0.16)" stroke="#2997ff" strokeWidth="1.8" />
@@ -673,83 +670,14 @@ export function SlidePillars() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* SLIDE 5: EL RETO REAL (VISUAL ANTES VS DESPUÉS)                            */
-/* -------------------------------------------------------------------------- */
-export function SlideChallenge() {
-  return (
-    <div className="w-full">
-      <Eyebrow>04 · Problema y Solución</Eyebrow>
-      <SlideHeading
-        title="Un obstáculo real en el camino"
-        subtitle="Nuestra máquina virtual tenía un Ubuntu antiguo (16.04) y Ansible nos pidió Python más moderno."
-      />
-
-      <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2">
-        <SpotlightCard glowColor="rgba(255, 69, 58, 0.25)" delay={0.15} className="border-[#ff453a]/30">
-          <div className="mb-4 flex items-center justify-between">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#ff453a]/15 px-3 py-1 text-xs font-bold text-[#ff453a]">
-              <XCircle className="h-4 w-4" /> Antes
-            </span>
-            <span className="font-mono text-xs text-[#a1a1a6]">Python 3.5.2</span>
-          </div>
-
-          <h3 className="text-2xl font-semibold text-white">Incompatibilidad de versión</h3>
-          <p className="mt-2.5 text-[15px] leading-relaxed text-[#a1a1a6]">
-            Ansible moderno usa código nuevo que Python 3.5 no entiende. Por eso al principio el comando <code className="text-white">ping</code> dio error.
-          </p>
-
-          <div className="mt-5 flex items-center justify-center gap-4 rounded-2xl border border-[#ff453a]/25 bg-black/40 p-4">
-            <div className="rounded-xl bg-[#2997ff]/15 px-3 py-2 text-center">
-              <div className="text-[10px] uppercase text-[#5ac8fa]">Mac</div>
-              <div className="font-mono text-sm font-bold text-white">Ansible 2.21</div>
-            </div>
-            <XCircle className="h-6 w-6 text-[#ff453a]" />
-            <div className="rounded-xl bg-[#ff453a]/15 px-3 py-2 text-center">
-              <div className="text-[10px] uppercase text-[#ff8a80]">Ubuntu 16.04</div>
-              <div className="font-mono text-sm font-bold text-white">Python 3.5</div>
-            </div>
-          </div>
-        </SpotlightCard>
-
-        <SpotlightCard glowColor="rgba(48, 209, 88, 0.25)" delay={0.25} className="border-[#30d158]/30">
-          <div className="mb-4 flex items-center justify-between">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#30d158]/15 px-3 py-1 text-xs font-bold text-[#30d158]">
-              <CheckCircle2 className="h-4 w-4" /> Solución
-            </span>
-            <span className="font-mono text-xs text-[#30d158]">Python 3.12 (uv)</span>
-          </div>
-
-          <h3 className="text-2xl font-semibold text-white">Instalamos Python 3.12 en la VM</h3>
-          <p className="mt-2.5 text-[15px] leading-relaxed text-[#a1a1a6]">
-            Usamos <strong className="text-white">uv</strong> para descargar Python 3.12 sin tocar el sistema viejo y le dijimos a <code className="text-white">hosts.ini</code> dónde encontrarlo.
-          </p>
-
-          <div className="mt-5 flex items-center justify-center gap-4 rounded-2xl border border-[#30d158]/25 bg-black/40 p-4">
-            <div className="rounded-xl bg-[#2997ff]/15 px-3 py-2 text-center">
-              <div className="text-[10px] uppercase text-[#5ac8fa]">Mac</div>
-              <div className="font-mono text-sm font-bold text-white">Ansible 2.21</div>
-            </div>
-            <ArrowRight className="h-6 w-6 text-[#30d158]" />
-            <div className="rounded-xl bg-[#30d158]/15 px-3 py-2 text-center">
-              <div className="text-[10px] uppercase text-[#30d158]">Ubuntu 16.04</div>
-              <div className="font-mono text-sm font-bold text-white">Python 3.12</div>
-            </div>
-          </div>
-        </SpotlightCard>
-      </div>
-    </div>
-  )
-}
-
-/* -------------------------------------------------------------------------- */
-/* SLIDE 6: CÓDIGO Y TERMINAL INTERACTIVA                                     */
+/* SLIDE 5: CÓDIGO Y TERMINAL INTERACTIVA                                     */
 /* -------------------------------------------------------------------------- */
 export function SlideCode() {
   const [tab, setTab] = useState('hosts')
   const [typedLines, setTypedLines] = useState(0)
 
   const tabs = [
-    { id: 'hosts', label: '1. hosts.ini', hint: 'Lista de servidores y ruta de Python 3.12' },
+    { id: 'hosts', label: '1. hosts.ini', hint: 'IP de AWS, llave .pem y ruta de Python' },
     { id: 'playbook', label: '2. playbook.yml', hint: 'Receta para instalar Nginx y crear la página web' },
     { id: 'ping', label: '3. Prueba Ad-Hoc', hint: 'Confirmación en verde de que ambos equipos responden' },
   ]
@@ -779,7 +707,7 @@ export function SlideCode() {
 
   return (
     <div className="w-full">
-      <Eyebrow>05 · Nuestro Código</Eyebrow>
+      <Eyebrow>04 · Nuestro Código</Eyebrow>
       <SlideHeading title="Así se ve en la práctica" />
 
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -835,7 +763,7 @@ export function SlideCode() {
               {'\n'}localhost <span className="text-[#5ac8fa]">ansible_connection</span>=<span className="text-[#30d158]">local</span> <span className="text-[#5ac8fa]">ansible_python_interpreter</span>=<span className="text-[#30d158]">/opt/homebrew/bin/python3</span>
               {'\n\n'}
               <span className="font-semibold text-[#bf5af2]">[servidores_web]</span>
-              {'\n'}ubuntu_vm <span className="text-[#5ac8fa]">ansible_host</span>=<span className="text-[#30d158]">192.168.1.222</span> <span className="text-[#5ac8fa]">ansible_user</span>=<span className="text-[#30d158]">ubuntu</span> <span className="text-[#5ac8fa]">ansible_python_interpreter</span>=<span className="text-[#30d158]">/home/ubuntu/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12</span>
+              {'\n'}ubuntu_vm <span className="text-[#5ac8fa]">ansible_host</span>=<span className="text-[#30d158]">18.191.92.45</span> <span className="text-[#5ac8fa]">ansible_user</span>=<span className="text-[#30d158]">ubuntu</span> <span className="text-[#5ac8fa]">ansible_ssh_private_key_file</span>=<span className="text-[#30d158]">~/Downloads/key-redes.pem</span> <span className="text-[#5ac8fa]">ansible_python_interpreter</span>=<span className="text-[#30d158]">/usr/bin/python3</span>
             </motion.pre>
           )}
 
@@ -849,19 +777,18 @@ export function SlideCode() {
               className="overflow-x-auto p-6 font-mono text-[12.5px] leading-relaxed text-[#e5e5ea]"
             >
               <span className="text-[#6e6e73]">---</span>{'\n'}
-              - <span className="text-[#5ac8fa]">name</span>: <span className="text-[#30d158]">Desplegar Nginx en Ubuntu Server</span>{'\n'}
+              - <span className="text-[#5ac8fa]">name</span>: <span className="text-[#30d158]">Desplegar Nginx en Ubuntu Server (AWS)</span>{'\n'}
               {'  '}<span className="text-[#5ac8fa]">hosts</span>: <span className="text-[#30d158]">servidores_web</span>{'\n'}
               {'  '}<span className="text-[#5ac8fa]">become</span>: <span className="text-[#ff9f0a]">true</span>  <span className="text-[#6e6e73]"># Usa permisos de administrador (sudo)</span>{'\n\n'}
               {'  '}<span className="text-[#5ac8fa]">tasks</span>:{'\n'}
-              {'    '}- <span className="text-[#5ac8fa]">name</span>: <span className="text-[#30d158]">1. Instalar Nginx si no existe</span>{'\n'}
-              {'      '}<span className="text-[#5ac8fa]">ansible.builtin.shell</span>:{'\n'}
-              {'        '}<span className="text-[#5ac8fa]">cmd</span>: <span className="text-[#30d158]">DEBIAN_FRONTEND=noninteractive apt-get update &amp;&amp; apt-get install -y nginx</span>{'\n'}
-              {'        '}<span className="text-[#5ac8fa]">creates</span>: <span className="text-[#30d158]">/usr/sbin/nginx</span>{'\n\n'}
+              {'    '}- <span className="text-[#5ac8fa]">name</span>: <span className="text-[#30d158]">1. Instalar servidor web Nginx</span>{'\n'}
+              {'      '}<span className="text-[#5ac8fa]">ansible.builtin.apt</span>:{'\n'}
+              {'        '}<span className="text-[#5ac8fa]">name</span>: <span className="text-[#30d158]">nginx</span> | <span className="text-[#5ac8fa]">state</span>: <span className="text-[#30d158]">present</span> | <span className="text-[#5ac8fa]">update_cache</span>: <span className="text-[#ff9f0a]">true</span>{'\n\n'}
               {'    '}- <span className="text-[#5ac8fa]">name</span>: <span className="text-[#30d158]">2. Crear página web con datos del servidor</span>{'\n'}
               {'      '}<span className="text-[#5ac8fa]">ansible.builtin.copy</span>:{'\n'}
               {'        '}<span className="text-[#5ac8fa]">dest</span>: <span className="text-[#30d158]">/var/www/html/index.html</span>{'\n'}
               {'        '}<span className="text-[#5ac8fa]">content</span>: <span className="text-[#30d158]">| ... &#123;&#123; ansible_facts['hostname'] &#125;&#125; ...</span>{'\n\n'}
-              {'    '}- <span className="text-[#5ac8fa]">name</span>: <span className="text-[#30d158]">3. Encender Nginx automáticamente</span>{'\n'}
+              {'    '}- <span className="text-[#5ac8fa]">name</span>: <span className="text-[#30d158]">3. Liberar puerto 80 (Apache2) y encender Nginx</span>{'\n'}
               {'      '}<span className="text-[#5ac8fa]">ansible.builtin.service</span>:{'\n'}
               {'        '}<span className="text-[#5ac8fa]">name</span>: <span className="text-[#30d158]">nginx</span> | <span className="text-[#5ac8fa]">state</span>: <span className="text-[#30d158]">started</span> | <span className="text-[#5ac8fa]">enabled</span>: <span className="text-[#ff9f0a]">true</span>
             </motion.pre>
@@ -905,10 +832,10 @@ export function SlideNginx() {
 
   return (
     <div className="w-full">
-      <Eyebrow>06 · Resultado Final</Eyebrow>
+      <Eyebrow>05 · Resultado Final</Eyebrow>
       <SlideHeading
         title="Página web lista en segundos"
-        subtitle="Al abrir http://192.168.1.222 en Safari vemos la página creada automáticamente."
+        subtitle="Al abrir http://18.191.92.45 en Safari vemos la página creada automáticamente en AWS."
       />
 
       <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2">
@@ -950,7 +877,7 @@ export function SlideNginx() {
               <span className="h-3 w-3 rounded-full bg-[#27c93f]" />
             </div>
             <div className="mx-auto rounded-md bg-white/10 px-10 py-1 font-mono text-xs text-[#a1a1a6]">
-              http://192.168.1.222
+              http://18.191.92.45
             </div>
           </div>
           <div className="bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_60%)] p-7">
@@ -960,9 +887,9 @@ export function SlideNginx() {
                 Este servidor web <strong>Nginx</strong> fue instalado y configurado automáticamente desde macOS.
               </p>
               <ul className="mt-4 space-y-2 text-xs text-[#e2e8f0]">
-                <li><strong>Hostname:</strong> <code className="rounded bg-[#0f172a] px-1.5 py-0.5 text-[#4ade80]">ubuntu</code></li>
-                <li><strong>Sistema Operativo:</strong> <code className="rounded bg-[#0f172a] px-1.5 py-0.5 text-[#4ade80]">Ubuntu 16.04</code></li>
-                <li><strong>Dirección IP:</strong> <code className="rounded bg-[#0f172a] px-1.5 py-0.5 text-[#4ade80]">192.168.1.222</code></li>
+                <li><strong>Hostname:</strong> <code className="rounded bg-[#0f172a] px-1.5 py-0.5 text-[#4ade80]">ip-172-31-47-100</code></li>
+                <li><strong>Sistema Operativo:</strong> <code className="rounded bg-[#0f172a] px-1.5 py-0.5 text-[#4ade80]">Ubuntu 26.04</code></li>
+                <li><strong>Dirección IP:</strong> <code className="rounded bg-[#0f172a] px-1.5 py-0.5 text-[#4ade80]">172.31.47.100 (AWS)</code></li>
                 <li><strong>Arquitectura:</strong> <code className="rounded bg-[#0f172a] px-1.5 py-0.5 text-[#4ade80]">x86_64</code></li>
               </ul>
             </div>
@@ -987,7 +914,7 @@ export function SlideIdempotency() {
 
   return (
     <div className="w-full">
-      <Eyebrow>07 · La magia de Ansible</Eyebrow>
+      <Eyebrow>06 · La magia de Ansible</Eyebrow>
       <SlideHeading
         title="¿Qué es la Idempotencia?"
         subtitle="Funciona como un termostato: si el cuarto ya está a la temperatura ideal, no vuelve a encender el aire."
@@ -1125,8 +1052,8 @@ export function SlideOutro({ onRestart }) {
         <pre className="p-5 font-mono text-xs leading-relaxed text-[#e5e5ea]">
           <span className="text-[#6e6e73]"># 1. Comprobar que el servidor responde</span>{'\n'}
           <span className="text-[#ff9f0a]">ansible</span> all -i hosts.ini -m ping{'\n\n'}
-          <span className="text-[#6e6e73]"># 2. Instalar y configurar todo (pide contraseña sudo)</span>{'\n'}
-          <span className="text-[#ff9f0a]">ansible-playbook</span> -i hosts.ini playbook.yml -K
+          <span className="text-[#6e6e73]"># 2. Instalar y configurar todo en AWS</span>{'\n'}
+          <span className="text-[#ff9f0a]">ansible-playbook</span> -i hosts.ini playbook.yml
         </pre>
       </motion.div>
 
